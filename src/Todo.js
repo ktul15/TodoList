@@ -4,7 +4,7 @@ class Todo extends Component {
   render() {
     return (
       <div>
-        <p>To make a website</p>
+        <p>{this.props.todo}</p>
       </div>
     );
   }
