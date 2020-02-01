@@ -9,18 +9,27 @@ class TodoList extends React.Component {
       todos: []
     };
     this.addTodo = this.addTodo.bind(this);
+    this.deleteTodo = this.deleteTodo.bind(this);
   }
   addTodo(todo) {
     this.setState(state => ({
       todos: [...state.todos, todo]
     }));
   }
+  deleteTodo(id) {
+    this.setState({
+      todos: this.state.todos.filter(t => t.id !== id)
+    });
+  }
   render() {
     const todos = this.state.todos.map(todo => {
-      return <Todo todo={todo} />;
+      return (
+        <Todo task={todo.task} id={todo.id} deleteTodo={this.deleteTodo} />
+      );
     });
     return (
       <div>
+        <h1>Todo List</h1>
         <NewTodoForm addTodo={this.addTodo} />
         {todos}
       </div>
