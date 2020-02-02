@@ -10,6 +10,8 @@ class TodoList extends React.Component {
     };
     this.addTodo = this.addTodo.bind(this);
     this.deleteTodo = this.deleteTodo.bind(this);
+    this.updateTodo = this.updateTodo.bind(this);
+    this.toggleCompletion = this.toggleCompletion.bind(this);
   }
   addTodo(todo) {
     this.setState(state => ({
@@ -21,10 +23,38 @@ class TodoList extends React.Component {
       todos: this.state.todos.filter(t => t.id !== id)
     });
   }
+  updateTodo(id, updatedTask) {
+    let updatedTodos = this.state.todos.map(todo => {
+      if (todo.id === id) {
+        return { ...todo, task: updatedTask };
+      }
+      return todo;
+    });
+    this.setState({ todos: updatedTodos });
+  }
+  toggleCompletion(id) {
+    let updatedTodos = this.state.todos.map(todo => {
+      if (todo.id === id) {
+        return { ...todo, completed: !todo.completed };
+      }
+      return todo;
+    });
+    this.setState({
+      todos: updatedTodos
+    });
+  }
   render() {
     const todos = this.state.todos.map(todo => {
       return (
-        <Todo task={todo.task} id={todo.id} deleteTodo={this.deleteTodo} />
+        <Todo
+          task={todo.task}
+          id={todo.id}
+          completed={todo.completed}
+          deleteTodo={this.deleteTodo}
+          addTodo={this.addTodo}
+          updateTodo={this.updateTodo}
+          toggleCompletion={this.toggleCompletion}
+        />
       );
     });
     return (
